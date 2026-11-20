@@ -1,0 +1,2 @@
+SELECT RAW META(menu).id
+FROM `app`.`_default`.`_default` AS menu USE KEYS "demo:menu:central";

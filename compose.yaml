@@ -1,0 +1,149 @@
+x-database: &database
+  environment: &app-env
+    DB_USERNAME: ${DB_USERNAME:?Copy .env.example to .env and set DB_USERNAME}
+  volumes:
+    - ./scripts:/opt/playground:ro
+  healthcheck: &health
+    interval: 15s
+    timeout: 12s
+    retries: 20
+    start_period: 30s
+    start_interval: 5s
+
+services:
+  mysql:
+    <<: *database
+    image: mysql:8.4.13
+    environment:
+      <<: *app-env
+      MYSQL_ROOT_HOST: localhost
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_admin
+    secrets: [DB_PASSWORD, mysql_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, mysql, check]
+
+  postgres:
+    <<: *database
+    image: postgres:17.12-bookworm
+    command: [postgres, -c, log_min_error_statement=panic]
+    environment:
+      <<: *app-env
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_admin
+      POSTGRES_INITDB_ARGS: --auth-local=peer --auth-host=scram-sha-256
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    secrets: [DB_PASSWORD, postgres_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, postgres, check]
+
+  oracle:
+    <<: *database
+    image: gvenzl/oracle-free:23.26.4-slim-faststart
+    environment:
+      <<: *app-env
+      ORACLE_PASSWORD_FILE: /run/secrets/oracle_admin
+    secrets: [DB_PASSWORD, oracle_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - oracle_data:/opt/oracle/oradata
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, oracle, check]
+
+  cassandra:
+    <<: *database
+    image: cassandra:5.0.9
+    entrypoint: [bash, /opt/playground/entrypoint.sh, cassandra]
+    environment:
+      <<: *app-env
+      CASSANDRA_CLUSTER_NAME: Playground
+      CASSANDRA_DC: datacenter1
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      MAX_HEAP_SIZE: 1G
+      HEAP_NEWSIZE: 256M
+    secrets: [DB_PASSWORD, cassandra_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - cassandra_data:/var/lib/cassandra
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, cassandra, check]
+
+  mongo:
+    <<: *database
+    image: mongo:8.0.38-noble
+    command: [mongod, --auth, --bind_ip_all]
+    environment:
+      <<: *app-env
+      MONGO_INITDB_ROOT_USERNAME: playground_admin
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo_admin
+    secrets: [DB_PASSWORD, mongo_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, mongo, check]
+
+  couchbase:
+    <<: *database
+    image: couchbase:community-7.6.1
+    hostname: couchbase.playground.test
+    networks:
+      default:
+        aliases: [couchbase.playground.test]
+    secrets: [DB_PASSWORD, couchbase_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - couchbase_data:/opt/couchbase/var
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, couchbase, check]
+
+  redis:
+    <<: *database
+    image: redis:7.4.12-bookworm
+    entrypoint: [bash, /opt/playground/entrypoint.sh, redis]
+    secrets: [DB_PASSWORD, redis_admin]
+    volumes:
+      - ./scripts:/opt/playground:ro
+      - redis_data:/data
+    healthcheck:
+      <<: *health
+      test: [CMD, bash, /opt/playground/database.sh, redis, check]
+
+secrets:
+  DB_PASSWORD:
+    file: ./secrets/DB_PASSWORD
+  mysql_admin:
+    file: ./secrets/mysql_admin
+  postgres_admin:
+    file: ./secrets/postgres_admin
+  oracle_admin:
+    file: ./secrets/oracle_admin
+  cassandra_admin:
+    file: ./secrets/cassandra_admin
+  mongo_admin:
+    file: ./secrets/mongo_admin
+  couchbase_admin:
+    file: ./secrets/couchbase_admin
+  redis_admin:
+    file: ./secrets/redis_admin
+
+volumes:
+  mysql_data:
+  postgres_data:
+  oracle_data:
+  cassandra_data:
+  mongo_data:
+  mongo_config:
+  couchbase_data:
+  redis_data:

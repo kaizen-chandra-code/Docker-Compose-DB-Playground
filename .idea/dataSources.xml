@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Playground MySQL" uuid="c4e3ef16-d982-405b-9207-4a034d9fd58f">
+      <driver-ref>mysql.8</driver-ref>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:13306/app</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground PostgreSQL" uuid="447e5e50-bcb9-4cd9-b451-a420c8cac174">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:15432/app</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground Oracle" uuid="58549145-0271-433e-99bb-22a1f7403be5">
+      <driver-ref>oracle.19</driver-ref>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//127.0.0.1:11521/FREEPDB1</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground Cassandra" uuid="019a45f6-e546-4462-91f7-45217e8caf36">
+      <driver-ref>cassandra</driver-ref>
+      <jdbc-driver>com.dbschema.CassandraJdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:cassandra://127.0.0.1:19042/app?localdatacenter=datacenter1</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground MongoDB" uuid="c2940b13-d432-40c9-9c0c-fd6fea894411">
+      <driver-ref>mongo.4</driver-ref>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://127.0.0.1:27018/app?authSource=app</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground Redis" uuid="1f7a262c-2af5-4e4b-9ebb-203d6013b31b">
+      <driver-ref>redis</driver-ref>
+      <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
+      <jdbc-url>jdbc:redis://127.0.0.1:16379/0</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Playground Couchbase" uuid="441f15e5-4ebf-4fdd-bd3b-ebb309f2ed2e">
+      <driver-ref>couchbase_query</driver-ref>
+      <jdbc-driver>com.intellij.CouchbaseJdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:couchbase:127.0.0.1:21210/app</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

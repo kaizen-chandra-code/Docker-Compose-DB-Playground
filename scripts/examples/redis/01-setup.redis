@@ -1,0 +1,2 @@
+HSETNX app:demo:arcade:season name "Summer Circuit"
+HSETNX app:demo:arcade:season scoring "Points"

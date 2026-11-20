@@ -1,0 +1,4 @@
+HGETALL app:demo:arcade:season
+ZREVRANGE app:demo:arcade:scores 0 2 WITHSCORES
+ZREVRANK app:demo:arcade:scores nova
+ZSCORE app:demo:arcade:scores nova

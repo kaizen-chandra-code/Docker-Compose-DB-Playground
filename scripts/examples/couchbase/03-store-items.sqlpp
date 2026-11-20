@@ -1,0 +1,6 @@
+SELECT menu.store, item.name, item.price
+FROM `app`.`_default`.`_default` AS menu
+USE KEYS ["demo:menu:central", "demo:menu:harbor"]
+UNNEST menu.items AS item
+WHERE item.available = true AND item.price <= 5
+ORDER BY item.price, menu.store;

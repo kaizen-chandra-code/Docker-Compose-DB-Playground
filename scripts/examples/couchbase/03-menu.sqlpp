@@ -1,0 +1,2 @@
+SELECT menu.store, menu.currency, menu.items
+FROM `app`.`_default`.`_default` AS menu USE KEYS "demo:menu:central";

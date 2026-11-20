@@ -1,0 +1,1 @@
+ZADD app:demo:arcade:scores NX 1200 pixel 950 nova 950 orbit 400 comet

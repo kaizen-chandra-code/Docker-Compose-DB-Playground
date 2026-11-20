@@ -1,0 +1,15 @@
+UPSERT INTO `app`.`_default`.`_default` (KEY, VALUE)
+VALUES ("demo:menu:central", {
+    "store": "Central", "currency": "USD",
+    "items": [
+        {"sku": "tea", "name": "Mint tea", "price": 4, "available": true},
+        {"sku": "cake", "name": "Lemon cake", "price": 6, "available": false}
+    ]
+}),
+("demo:menu:harbor", {
+    "store": "Harbor", "currency": "USD",
+    "items": [
+        {"sku": "tea", "name": "Mint tea", "price": 5, "available": true},
+        {"sku": "toast", "name": "Mushroom toast", "price": 8, "available": true}
+    ]
+});
